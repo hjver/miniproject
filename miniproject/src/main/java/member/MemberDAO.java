@@ -13,6 +13,10 @@ public class MemberDAO {
 		return mmapper.member_insert(mdto);
 	}
 	
+	public MemberDTO member_one(String memail) {
+		return mmapper.member_one(memail);
+	}
+	
 	/*
 	@Resource(name="template")
 	public SqlSessionTemplate st;

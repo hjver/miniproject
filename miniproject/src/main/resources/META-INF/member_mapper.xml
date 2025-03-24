@@ -9,4 +9,8 @@ insert into member (midx,memail,mpasswd,mname,mmobile,age_over14,terms_agree,pri
 values ('0',#{memail},#{mpasswd},#{mname},#{mmobile},#{age_over14},#{terms_agree},#{privacy_agree},#{marketing_agree},now())
 </insert>
 
+<select id="member_one" resultType="memberdto">
+select * from member where memail=#{memail}
+</select>
+
 </mapper>
