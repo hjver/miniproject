@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="common_path" value="${pageContext.request.contextPath}/resources" />
-<form id="frm" method="post" action="./member_join_ok.do">
+<form id="frm" method="post" action="/member_join_ok.do">
 	<!-- 중복체크여부 저장 -->
 	<input type="hidden" id="emailck" value="">
 	
@@ -24,29 +24,22 @@
 	    <a>휴대폰번호</a> <input type="text" name="mmobile" placeholder=" -없이 숫자만 입력해주세요." autocomplete="none">
 	</div>
 	<div>
-	<input type="checkbox" id="all_check" onchange="check_all()"> <span>전체 동의</span> </div>
+	<input type="checkbox" id="all" onchange="all_check(this.checked)"> <span>전체 동의</span> </div>
 	
 	<div class="line"></div>
 	
 	<div class="bottom">	
-		<div class="box1"><input type="checkbox" class="agree"> <a class="a1">(필수) <span>만 14세 이상입니다.</span></a></div>
-		<div class="box2"><input type="checkbox" class="agree"> <a class="a2">(필수) <span><u>이용약관</u>에 동의</span></a></div>
-		<div class="box3"><input type="checkbox" class="agree"> <a class="a3">(필수) <span><u>개인정보 수집 및 이용</u>에 동의</span></a></div>
+		<div class="box1"><input type="checkbox" class="agree" name="age_over14" value="Y" onclick="agree_check()"> <a class="a1">(필수) <span>만 14세 이상입니다.</span></a></div>
+		<div class="box2"><input type="checkbox" class="agree" name="terms_agree" value="Y" onclick="agree_check()"> <a class="a2">(필수) <span><u>이용약관</u>에 동의</span></a></div>
+		<div class="box3"><input type="checkbox" class="agree" name="privacy_agree" value="Y" onclick="agree_check()"> <a class="a3">(필수) <span><u>개인정보 수집 및 이용</u>에 동의</span></a></div>
 		<section class="text1" id="text1"></section>
-		<div class="box4"><input type="checkbox"> <span>(선택) 마케팅 수신에 동의</span></div>
+		<div class="box4"><input type="checkbox" class="agree" name="marketing_agree" value="Y" onclick="agree_check()"> <span>(선택) 마케팅 수신에 동의</span></div>
 		<section class="text2" id="text2"></section>
 	</div>
 	<div><input type="button" value="가입 하기" onclick="member_join()"></div>
 </form>
-<script>
-function check_all(){
-	var isChecked = document.getElementById("all_check").checked; //전체동의 체크여부 확인
-	var checkboxes = document.querySelectorAll(".agree"); //하위 체크박스 목록
-	checkboxes.forEach(function(checkbox){
-		checkbox.checked = isChecked;
-	});
-}
 
+<script>
 window.onload = function(){
 	var http1 = new XMLHttpRequest; //ajax 통신
 	http1.open("GET","${common_path}/agree1.txt",false); //GET 통신을 이용하여 해당 파일을 로드
@@ -59,4 +52,4 @@ window.onload = function(){
 	document.getElementById("text2").innerHTML = http2.response;
 	}
 </script>
-<script src="${common_path}/js/member_join.js?=v1"></script>
+<script src="${common_path}/js/member_join.js?=v2"></script>

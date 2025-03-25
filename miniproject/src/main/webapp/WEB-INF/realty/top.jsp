@@ -22,8 +22,12 @@
        <!--
        홍길동님 환영합니다.[로그아웃]
        -->
-       <span title="로그인"><img src="${common_path}/ico/login.svg"></span>
-       <span title="회원가입"><img src="${common_path}/ico/membership.svg"></span>
+       <a href="/login.do">
+       	 <span title="로그인"><img src="${common_path}/ico/login.svg"></span>
+       </a>
+       <a href="/member_join.do">
+         <span title="회원가입"><img src="${common_path}/ico/membership.svg"></span>
+       </a>
      </li>
    </ul>
  </div>

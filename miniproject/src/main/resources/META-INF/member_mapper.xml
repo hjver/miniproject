@@ -4,13 +4,21 @@
 
 <mapper namespace="member.MemberMapper">
 
+<!-- 이메일 중복확인을 위한 select one -->
+<select id="selectone_emailck" resultType="memberdto">
+select midx from member where memail=#{memail}
+</select>
+
+<!-- 회원 가입 정보 DB 저장 -->
 <insert id="member_insert">
 insert into member (midx,memail,mpasswd,mname,mmobile,age_over14,terms_agree,privacy_agree,marketing_agree,join_date)
-values ('0',#{memail},#{mpasswd},#{mname},#{mmobile},#{age_over14},#{terms_agree},#{privacy_agree},#{marketing_agree},now())
+values ('0',#{memail},#{mpasswd},#{mname},#{mmobile},#{age_over14},#{terms_agree},#{privacy_agree},<if test="marketing_agree != null">#{marketing_agree}</if>
+<if test="marketing_agree == null">'N'</if>,now())
 </insert>
 
-<select id="member_one" resultType="memberdto">
-select * from member where memail=#{memail}
+<!-- 로그인을 위한 가입자 정보 select one -->
+<select id="selectone_userck" resultType="memberdto" parameterType="Map">
+select mname from member where memail=#{memail} and mpasswd=#{mpasswd}
 </select>
 
 </mapper>

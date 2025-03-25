@@ -37,6 +37,9 @@ function member_join(){
 		frm.mmobile.value=="";
 		frm.mmobile.focus();
 	}
+	else if(!frm.age_over14.checked || !frm.terms_agree.checked || !frm.privacy_agree.checked) {
+		alert("필수동의사항은 체크해야 합니다.")
+	}
 	else{
 		frm.submit();
 	}
@@ -67,7 +70,7 @@ function ajaxpost(data){
 	
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState==XMLHttpRequest.DONE && xhr.status==200){
-			if(xhr.responsText == "ok"){
+			if(xhr.responseText == "ok"){
 				alert("중복되지 않는 이메일입니다.");
 				document.getElementById("emailck").value = "ok";
 				frm.memail.readOnly = true; 
@@ -79,6 +82,26 @@ function ajaxpost(data){
 		}
 	};
 
-	xhr.open("GET","./email_check.do?memail="+data,true);
+	xhr.open("GET","/email_check.do?memail="+data,true);
 	xhr.send(); 
+}
+
+//전체 체크박스 선택/해제
+function all_check(z) {
+    var checkboxes = document.querySelectorAll('.agree');
+    checkboxes.forEach(function (checkbox) {
+        checkbox.checked = z;
+    });
+}
+
+//개별 체크 상태에 따라 전체 동의 체크박스 컨트롤
+function agree_check() {
+    var checkboxes = document.querySelectorAll('.agree');
+    var allChecked = true;
+    checkboxes.forEach(function (checkbox) {
+        if (!checkbox.checked) {
+            allChecked = false;
+        }
+    });
+    document.getElementById("all").checked = allChecked;
 }

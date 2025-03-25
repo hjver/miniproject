@@ -6,17 +6,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이메일 찾기</title>
+<title>비밀번호 찾기</title>
 <link rel="stylesheet" type="text/css" href="${common_path}/css/index.css?v=1">
-<link rel="stylesheet" type="text/css" href="${common_path}/css/email_search.css?v=2">
+<link rel="stylesheet" type="text/css" href="${common_path}/css/passwd_search.css?v=2">
 </head>
 <body>
   <!-- 최상단 및 메뉴 -->
   <%@ include file="./top.jsp"%>
   
   <main>
-    <!-- email search view -->
-    <%@ include file="./email_search_view.jsp" %>  
+    <!-- password search view -->
+    <%@ include file="./passwd_search_view.jsp" %>  
   </main>
 
   <footer>
