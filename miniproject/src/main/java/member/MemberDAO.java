@@ -9,18 +9,30 @@ import org.springframework.stereotype.Repository;
 public class MemberDAO {
 	
 	@Autowired
-	private MemberMapper mmapper;
+	private MemberMapper memberMapper;
 	
 	public MemberDTO selectone_emailck(String memail) {
-		return mmapper.selectone_emailck(memail);
+		return memberMapper.selectone_emailck(memail);
 	}
 	
 	public int member_insert(MemberDTO mdto) {
-		return mmapper.member_insert(mdto);
+		return memberMapper.member_insert(mdto);
 	}
 	
 	public MemberDTO selectone_userck(Map<String, String> user) {
-		return mmapper.selectone_userck(user);
+		return memberMapper.selectone_userck(user);
+	}
+	
+	public MemberDTO selectone_emailsearch(Map<String, String> user) {
+		return memberMapper.selectone_emailsearch(user);
+	}
+	
+	public MemberDTO selectone_passwdsearch(Map<String, String> user) {
+		return memberMapper.selectone_passwdsearch(user);
+	}
+	
+	public int password_change(Map<String, String> user) {
+		return memberMapper.password_change(user);
 	}
 
 	/*

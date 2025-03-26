@@ -18,7 +18,22 @@ values ('0',#{memail},#{mpasswd},#{mname},#{mmobile},#{age_over14},#{terms_agree
 
 <!-- 로그인을 위한 가입자 정보 select one -->
 <select id="selectone_userck" resultType="memberdto" parameterType="Map">
-select mname from member where memail=#{memail} and mpasswd=#{mpasswd}
+select mname,memail,mmobile from member where memail=#{memail} and mpasswd=#{mpasswd}
 </select>
+
+<!-- 이메일 찾기를 위한 가입자 정보 select one -->
+<select id="selectone_emailsearch" resultType="memberdto" parameterType="Map">
+select memail from member where mname=#{mname} and mmobile=#{mmobile}
+</select>
+
+<!-- 비밀번호 찾기를 위한 가입자 정보 select one -->
+<select id="selectone_passwdsearch" resultType="memberdto" parameterType="Map">
+select midx from member where memail=#{memail} and mmobile=#{mmobile}
+</select>
+
+<!-- 비밀번호 변경 date -->
+<update id="password_change">
+update member set mpasswd=#{mpasswd} where midx=#{midx}
+</update>
 
 </mapper>

@@ -6,8 +6,8 @@
 	<div><input type="password" id="passwd" placeholder="비밀번호"></div>
 	<div><input type="button" value="로그인" onclick="logincheck()"></div>
 	<div>
-		<span>이메일 찾기</span>
-		<span>비밀번호 찾기</span>
+		<span><a href="/email_search.do">이메일 찾기</a></span>
+		<span><a href="/passwd_search.do">비밀번호 찾기</a></span>
 	</div>
 	<form id="frm" method="post" action="/login_ok.do">
 		<input type="hidden" name="memail">

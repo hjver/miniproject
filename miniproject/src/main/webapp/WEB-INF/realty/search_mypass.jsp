@@ -16,7 +16,7 @@
 
   <main>
     <!-- 이메일 확인 view -->
-    <%@ include file="./search_myinfo_view.jsp"%>
+    <%@ include file="./search_mypass_view.jsp"%>
   </main>
 
   <footer>

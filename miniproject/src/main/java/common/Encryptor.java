@@ -2,7 +2,7 @@ package common;
 
 import java.security.MessageDigest;
 
-public class Encryptor {
+public abstract class Encryptor {
 	
 	public String encodePassword(String pw) {
 		

@@ -19,15 +19,18 @@
      <li>업체의뢰</li>
      <li>의뢰현황</li>
      <li class="logins">
-       <!--
-       홍길동님 환영합니다.[로그아웃]
-       -->
-       <a href="/login.do">
-       	 <span title="로그인"><img src="${common_path}/ico/login.svg"></span>
-       </a>
-       <a href="/member_join.do">
-         <span title="회원가입"><img src="${common_path}/ico/membership.svg"></span>
-       </a>
+       <c:if test="${not empty sessionScope.userDTO}">
+         <p> ${sessionScope.userDTO.getMname()}님 환영합니다.<a href="/logout.do">[로그아웃]</a></p>
+       </c:if>
+
+       <c:if test="${empty sessionScope.userDTO}">
+         <a href="/login.do">
+           <span title="로그인"><img src="${common_path}/ico/login.svg"></span>
+         </a>
+         <a href="/member_join.do">
+           <span title="회원가입"><img src="${common_path}/ico/membership.svg"></span>
+       	 </a>
+       </c:if>  
      </li>
    </ul>
  </div>

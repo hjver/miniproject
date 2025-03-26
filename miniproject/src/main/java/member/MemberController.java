@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import common.Encryptor;
 
 @Controller
-public class MemberController {
+public class MemberController extends Encryptor{
 	
 	@Resource(name="MemberDAO")
 	private MemberDAO mdao;
@@ -50,8 +51,7 @@ public class MemberController {
 	public String member_join_ok(MemberDTO mdto, Model m) {
 	    try {
 	        // 패스워드 암호화
-	        Encryptor enc = new Encryptor();
-	        mdto.setMpasswd(enc.encodePassword(mdto.getMpasswd()));
+	        mdto.setMpasswd(encodePassword(mdto.getMpasswd()));
 
 	        // DB 저장 시도
 	        int result = mdao.member_insert(mdto);
@@ -74,25 +74,26 @@ public class MemberController {
 	    return "WEB-INF/realty/redirect";
 	}
 	
-	// 회원가입 화면 연결
+	// 로그인 화면 연결
 	@GetMapping("/login.do")
 	public String login() {
         return "WEB-INF/realty/login";  //login 화면 uri : WEB-INF/realty/login.jsp
 	}
 	
+	// 로그인 정보 확인 및 로그인
 	@PostMapping("/login_ok.do")
-	public String login_ok(MemberDTO mdto, Model m) {
+	public String login_ok(MemberDTO mdto, HttpSession session, Model m) {
 		// 패스워드 암호화
-        Encryptor enc = new Encryptor();
-        mdto.setMpasswd(enc.encodePassword(mdto.getMpasswd()));
+        mdto.setMpasswd(encodePassword(mdto.getMpasswd()));
         
         // 가입자 DB정보 확인
         Map<String, String> user = new HashMap<>();
         user.put("memail", mdto.getMemail());
         user.put("mpasswd", mdto.getMpasswd());
-        MemberDTO one = this.mdao.selectone_userck(user);
+        MemberDTO userDTO = this.mdao.selectone_userck(user);
         
-        if(one != null) {
+        if(userDTO != null) {
+        	session.setAttribute("userDTO", userDTO);
         	m.addAttribute("msg", "로그인 되었습니다.");
         	m.addAttribute("url", "/index.do");
         }
@@ -103,4 +104,91 @@ public class MemberController {
         
 		return "WEB-INF/realty/redirect";
 	}
+	
+	// 로그아웃
+	@GetMapping("/logout.do")
+	public String logout(HttpSession session) {
+        session.invalidate(); // 세션 삭제
+		return "WEB-INF/realty/index";
+	}
+	
+	// 이메일 찾기 화면 연결
+	@GetMapping("/email_search.do")
+	public String email_search() {
+		return "WEB-INF/realty/email_search";
+	}
+	
+	// 이메일 찾기를 위한 가입자 DB정보 확인
+	@PostMapping("/email_search_ok.do")
+	public String email_search_ok(MemberDTO mdto, Model m) {
+
+        // 가입자 DB정보 확인
+        Map<String, String> user = new HashMap<>();
+        user.put("mname", mdto.getMname());
+        user.put("mmobile", mdto.getMmobile());
+        MemberDTO one = this.mdao.selectone_emailsearch(user);
+
+        if(one != null) {
+        	m.addAttribute("memail", one.getMemail());
+        	return "WEB-INF/realty/search_myinfo";
+        }
+        else {
+        	m.addAttribute("msg", "가입하신 정보는 확인되지 않습니다..");
+        	m.addAttribute("url", "/email_search.do");
+        	return "WEB-INF/realty/redirect";
+        }
+	}
+	
+	// 비밀번호 찾기 화면 연결
+	@GetMapping("/passwd_search.do")
+	public String passwd_search() {
+		return "WEB-INF/realty/passwd_search";
+	}
+	
+	// 패스워드 변경을 위한 가입자 DB정보 확인
+	@PostMapping("/passwd_search_ok.do")
+	public String passwd_search_ok(MemberDTO mdto, Model m) {
+
+        // 가입자 DB정보 확인
+        Map<String, String> user = new HashMap<>();
+        user.put("memail", mdto.getMemail());
+        user.put("mmobile", mdto.getMmobile());
+        MemberDTO one = this.mdao.selectone_passwdsearch(user);
+
+        if(one != null) {
+        	m.addAttribute("midx", one.getMidx());
+        	return "WEB-INF/realty/search_mypass";
+        }
+        else {
+        	m.addAttribute("msg", "가입하신 정보는 확인되지 않습니다..");
+        	m.addAttribute("url", "/passwd_search.do");
+        	return "WEB-INF/realty/redirect";
+        }
+	}
+	
+	// 패스워드 변경
+	@PostMapping("/passwd_change_ok.do")
+	public String email_change_ok(MemberDTO mdto, Model m) {
+		// 패스워드 암호화
+        mdto.setMpasswd(encodePassword(mdto.getMpasswd()));
+		
+        // 가입자 DB정보 확인
+        Map<String, String> user = new HashMap<>();
+        user.put("midx", String.valueOf(mdto.getMidx()));
+        user.put("mpasswd", mdto.getMpasswd());
+        int result = this.mdao.password_change(user);
+
+        if(result > 0) {
+        	m.addAttribute("msg", "패스워드가 변경되었습니다.");
+        	m.addAttribute("url", "/login.do");
+        }
+        else {
+        	m.addAttribute("msg", "오류가 발생하여 패스워드가 변경되지 않았습니다..");
+        	m.addAttribute("url", "/search_mypass.do");
+        }
+        return "WEB-INF/realty/redirect";
+	}
+	
+	
+	
 }

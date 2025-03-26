@@ -7,7 +7,12 @@
 </ul>
 </div>
 <div class="text1">
-<div>가입하신 이메일 정보 : </div>
+<div>가입하신 이메일 정보 : ${memail}</div>
 </div>
-<div><input type="button" value="정보확인" class="search_submit"></div>
+<div><input type="button" value="정보확인" class="search_submit" onclick="redirect()"></div>
 </section>
+<script>
+function redirect(){
+	location.href = "/login.do";
+}
+</script>
