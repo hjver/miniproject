@@ -35,9 +35,9 @@ public class MemberController extends Encryptor{
 	@ResponseBody  //ajax 응답용 : 메서드의 반환 값을 "뷰(jsp)"로 보내지 않고 바로 HTTP 응답(body)에 넣어서 보냄
 	public String email_check(@RequestParam("memail") String memail) {
 		String msg = "";
-		MemberDTO one = this.mdao.selectone_emailck(memail); //DB에서 memail=memail인 데이터 select
+		Integer midx = this.mdao.selectone_emailck(memail); //DB에서 memail=memail인 데이터 select
 		
-		if(one == null) { //DB에 memail=memail인 데이터가 없으면 중복이 아니므로 "ok"
+		if(midx == null) { //DB에 memail=memail인 데이터가 없으면 중복이 아니므로 "ok"
 			msg = "ok";
 		}
 		else {
@@ -126,10 +126,10 @@ public class MemberController extends Encryptor{
         Map<String, String> user = new HashMap<>();
         user.put("mname", mdto.getMname());
         user.put("mmobile", mdto.getMmobile());
-        MemberDTO one = this.mdao.selectone_emailsearch(user);
+        String memail = this.mdao.selectone_emailsearch(user);
 
-        if(one != null) {
-        	m.addAttribute("memail", one.getMemail());
+        if(memail != null) {
+        	m.addAttribute("memail", memail);
         	return "WEB-INF/realty/search_myinfo";
         }
         else {
@@ -153,10 +153,10 @@ public class MemberController extends Encryptor{
         Map<String, String> user = new HashMap<>();
         user.put("memail", mdto.getMemail());
         user.put("mmobile", mdto.getMmobile());
-        MemberDTO one = this.mdao.selectone_passwdsearch(user);
+        Integer midx = this.mdao.selectone_passwdsearch(user);
 
-        if(one != null) {
-        	m.addAttribute("midx", one.getMidx());
+        if(midx != null) {
+        	m.addAttribute("midx", midx);
         	return "WEB-INF/realty/search_mypass";
         }
         else {
@@ -188,7 +188,4 @@ public class MemberController extends Encryptor{
         }
         return "WEB-INF/realty/redirect";
 	}
-	
-	
-	
 }

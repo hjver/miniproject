@@ -11,7 +11,7 @@ public class MemberDAO {
 	@Autowired
 	private MemberMapper memberMapper;
 	
-	public MemberDTO selectone_emailck(String memail) {
+	public Integer selectone_emailck(String memail) {
 		return memberMapper.selectone_emailck(memail);
 	}
 	
@@ -23,11 +23,11 @@ public class MemberDAO {
 		return memberMapper.selectone_userck(user);
 	}
 	
-	public MemberDTO selectone_emailsearch(Map<String, String> user) {
+	public String selectone_emailsearch(Map<String, String> user) {
 		return memberMapper.selectone_emailsearch(user);
 	}
 	
-	public MemberDTO selectone_passwdsearch(Map<String, String> user) {
+	public Integer selectone_passwdsearch(Map<String, String> user) {
 		return memberMapper.selectone_passwdsearch(user);
 	}
 	
