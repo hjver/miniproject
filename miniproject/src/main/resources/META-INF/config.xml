@@ -15,7 +15,8 @@
 
 <!-- dto class의 alias 작성 -->
 <typeAliases>
-	<typeAlias alias="memberdto" type="member.MemberDTO"/>
+	<typeAlias alias="memberDTO" type="member.MemberDTO"/>
+	<typeAlias alias="typeDTO" type="type.TypeDTO"/>
 </typeAliases>
 
 </configuration>

@@ -11,7 +11,7 @@
 <nav>
  <div class="menus">
    <ul class="menus_ul">
-     <li><img src="${common_path}/logo/e_click_logo.png"></li>
+     <li><img src="${common_path}/logo/e_click_logo.png" onclick="location.href='/index.do'"></li>
      <li>일반매물</li>
      <li>추천매물</li>
      <li>중계의뢰</li>

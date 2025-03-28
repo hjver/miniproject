@@ -38,6 +38,7 @@
 	<array>
 		<value>classpath:/META-INF/member_mapper.xml</value>
 		<value>classpath:/META-INF/counsel_mapper.xml</value>
+		<value>classpath:/META-INF/type_mapper.xml</value>
 	</array>
 </property>
 
@@ -48,7 +49,7 @@
 </bean>
 
 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-    <property name="basePackage" value="main, member, counsel"/>
+    <property name="basePackage" value="main, member, counsel, type"/>
 </bean>
 
 </beans>

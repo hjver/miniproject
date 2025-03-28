@@ -23,7 +23,7 @@ public class CounselController {
 	public String counsel_ok(@ModelAttribute CounselUserDTO cdto, Model m) {
 		int result = cdao.counselinfo_insert(cdto);
 		if(result > 0) {
-	        m.addAttribute("msg", "상담신청이 정상적으로 접수되었습니다.");
+	        m.addAttribute("msg", "담당자가 확인 후 해당 상담일시에 맞춰서 연락 드립니다.");
 	        m.addAttribute("url", "/index.do"); 		
 		}
 		else {

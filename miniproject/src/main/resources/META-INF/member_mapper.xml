@@ -17,7 +17,7 @@ values ('0',#{memail},#{mpasswd},#{mname},#{mmobile},#{age_over14},#{terms_agree
 </insert>
 
 <!-- 로그인을 위한 가입자 정보 select one -->
-<select id="selectone_userck" resultType="memberdto" parameterType="Map">
+<select id="selectone_userck" resultType="memberDTO" parameterType="Map">
 select midx,mname,memail,mmobile from member where memail=#{memail} and mpasswd=#{mpasswd}
 </select>
 
