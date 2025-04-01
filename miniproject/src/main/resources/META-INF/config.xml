@@ -17,6 +17,7 @@
 <typeAliases>
 	<typeAlias alias="memberDTO" type="member.MemberDTO"/>
 	<typeAlias alias="typeDTO" type="type.TypeDTO"/>
+	<typeAlias alias="mdDTO" type="md.MDDTO"/>
 </typeAliases>
 
 </configuration>

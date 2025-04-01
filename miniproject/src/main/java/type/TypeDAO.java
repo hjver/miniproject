@@ -14,4 +14,8 @@ public class TypeDAO {
 	public List<TypeDTO> select_alltype() {
 		return typeMapper.select_alltype();
 	}
+	
+	public TypeDTO select_onetype(int bunyang_index) {
+		return typeMapper.select_onetype(bunyang_index);
+	}
 }

@@ -22,7 +22,7 @@ http.onreadystatechange = function(){
 		view();
 	}
 }
-http.open("GET","/api_alltype.do",false);
+http.open("GET","/api_alltype.do",true);
 http.send();
 
 function view() {
@@ -32,6 +32,13 @@ function view() {
     for (var i = 0; i < data["type_db"].length; i++) {
         var li = document.createElement("li");
         var a = document.createElement("a");
+        
+        // a 클릭 시 go_href 호출, n을 인자로 전달
+        a.onclick = function(n) {
+            return function() {
+                go_href(n);
+            };
+        }(i);
 
         // 동적으로 id를 만들어서 할당
         var spanTag = document.createElement("span");
@@ -74,5 +81,16 @@ function view() {
         // ul 요소에 li 요소 추가
         list.appendChild(li);
     }
+}
+
+function go_href(n){
+	var userDTO = '${sessionScope.userDTO}';
+	if(userDTO && userDTO !== 'null' && userDTO !== ''){ //세션에 값이 있을 경우, 해당 페이지로 이
+		window.location.href = "/week_tails.do?bunyang_index=" + data["type_db"][n]["bunyang_index"];
+	}
+	else{ //세션에 값이 없으면 로그인 페이지로 리다이렉트
+		alert("해당 사이트는 로그인이 필요합니다."); 
+		window.location.href = "/login.do";
+	}
 }
 </script>

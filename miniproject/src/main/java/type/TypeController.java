@@ -8,18 +8,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-@RestController
+@Controller
 public class TypeController {
 
 	@Resource(name="typeDAO")
 	TypeDAO typeDAO;
 	
 	@GetMapping("/api_alltype.do")
+	@ResponseBody  //JSON 응답을 반환하도록 설정
 	public String api_alltype(HttpServletResponse res) throws Exception {
 		res.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = res.getWriter();
@@ -51,5 +53,17 @@ public class TypeController {
 
 		pw.close();
 		return null;
+	}
+	
+	@GetMapping("/week_tails.do")
+	public String week_tails(@RequestParam("bunyang_index") int bunyang_index, Model m){
+		
+		TypeDTO typeDTO = typeDAO.select_onetype(bunyang_index);
+		m.addAttribute("typeDTO", typeDTO);
+		
+		System.out.println("bunyang_units: " + typeDTO.getBunyang_units());
+		System.out.println("bunyang_towers: " + typeDTO.getBunyang_towers());
+		
+		return "WEB-INF/realty/week_tails";
 	}
 }
