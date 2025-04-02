@@ -24,21 +24,21 @@
   </div>
 </section>
 <script>
-var http,data;
-http = new XMLHttpRequest();
-http.onreadystatechange = function(){
-	if(http.readyState==4 && http.status==200){
-		data = JSON.parse(this.response);
-		view();
+var data_type;
+var http_type = new XMLHttpRequest();
+http_type.onreadystatechange = function(){
+	if(http_type.readyState==4 && http_type.status==200){
+		data_type = JSON.parse(this.response);
+		view_type();
 	}
 }
-http.open("GET","/api_alltype.do",true);
-http.send();
+http_type.open("GET","/api_alltype.do",true);
+http_type.send();
 
 var common_path = "${common_path}";
-function view(){
-	for(var n=0; n<data["type_db"].length;n++) {
-		var nth_type = data["type_db"][n];
+function view_type(){
+	for(var n=0; n<data_type["type_db"].length;n++) {
+		var nth_type = data_type["type_db"][n];
 		
 		document.getElementById("btag"+n).innerText = nth_type["bunyang_tag"];
 		document.getElementById("btitle"+n).innerText = nth_type["bunyang_title"];
@@ -51,8 +51,8 @@ function view(){
 
 function go_href(n){
 	var userDTO = '${sessionScope.userDTO}';
-	if(userDTO && userDTO !== 'null' && userDTO !== ''){ //세션에 값이 있을 경우, 해당 페이지로 이
-		window.location.href = "/week_tails.do?bunyang_index=" + data["type_db"][n]["bunyang_index"];
+	if(userDTO && userDTO !== 'null' && userDTO !== ''){ //세션에 값이 있을 경우, 해당 페이지로 이동
+		window.location.href = "/week_tails.do?bunyang_index=" + data_type["type_db"][n]["bunyang_index"];
 	}
 	else{ //세션에 값이 없으면 로그인 페이지로 리다이렉트
 		alert("해당 사이트는 로그인이 필요합니다."); 

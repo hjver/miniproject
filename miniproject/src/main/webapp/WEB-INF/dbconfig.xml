@@ -36,10 +36,12 @@
 <property name="configLocation" value="classpath:/META-INF/config.xml"/>
 <property name="mapperLocations">
 	<array>
+		<value>classpath:/META-INF/corpinfo_mapper.xml</value>
 		<value>classpath:/META-INF/member_mapper.xml</value>
 		<value>classpath:/META-INF/counsel_mapper.xml</value>
 		<value>classpath:/META-INF/type_mapper.xml</value>
 		<value>classpath:/META-INF/md_mapper.xml</value>
+		<value>classpath:/META-INF/reservation_mapper.xml</value>
 	</array>
 </property>
 
@@ -50,7 +52,7 @@
 </bean>
 
 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-    <property name="basePackage" value="main, member, counsel, type, md"/>
+    <property name="basePackage" value="main, member, counsel, type, md, reservation"/>
 </bean>
 
 </beans>

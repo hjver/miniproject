@@ -15,9 +15,12 @@
 
 <!-- dto class의 alias 작성 -->
 <typeAliases>
+	<typeAlias alias="corpinfoDTO" type="main.CorpInfoDTO"/>
 	<typeAlias alias="memberDTO" type="member.MemberDTO"/>
 	<typeAlias alias="typeDTO" type="type.TypeDTO"/>
 	<typeAlias alias="mdDTO" type="md.MDDTO"/>
+	<typeAlias alias="counseluserDTO" type="counsel.CounselUserDTO"/>
+	<typeAlias alias="reservationDTO" type="reservation.ReservationDTO"/>
 </typeAliases>
 
 </configuration>

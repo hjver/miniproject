@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="common_path" value="${pageContext.request.contextPath}/resources" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>금주 분양 매물 정보</title>
-<link rel="stylesheet" type="text/css" href="./css/index.css?v=1">
-<link rel="stylesheet" type="text/css" href="./css/week_tails.css?v=1">
+<link rel="stylesheet" type="text/css" href="${common_path}/css/index.css?v=1">
+<link rel="stylesheet" type="text/css" href="${common_path}/css/week_tails.css?v=1">
 </head>
 <body>
 <!-- 최상단 및 메뉴 -->
@@ -31,17 +33,26 @@
                 <li>건설사</li>
 				<li>${typeDTO.getBunyang_company()}</li>
                 <li>사진정보</li>
-				<li><img src="./room/${typeDTO.getBunyang_img()}"></li>
+				<li><img src="${common_path}/room/${typeDTO.getBunyang_img()}"></li>
             </ul>
 		</div>
-        <div><button class="btn_css">방문예약</button></div>
+        <div><button class="btn_css" onclick="gopage()">방문예약</button></div>
         <div><button class="btn_close">방문예약완료</button></div>
 	</div>
+	<form id="frm" method="post" action="/reservation.do">
+		<input type="hidden" name="bunyang_title" value="">
+	</form>
 </main>
 
- <footer>
-   <!-- 카피라이터 -->
-   <%@ include file="./copyright.jsp"%>
- </footer>
+<footer>
+  <!-- 카피라이터 -->
+  <%@ include file="./copyright.jsp"%>
+</footer>
 </body>
 </html>
+<script>
+function gopage(){
+	frm.bunyang_title.value = "${typeDTO.getBunyang_title()}";
+	frm.submit();
+}
+</script>

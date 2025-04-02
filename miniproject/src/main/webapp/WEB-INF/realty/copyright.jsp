@@ -29,12 +29,12 @@
     </li>
     <li>
       <ul>
-        <li>e-Click 주식회사 | 대표 : 홍길동</li>
-        <li>서울특별시 종로구 3가 국일빌딩 5F</li>
-        <li>사업자번호 : 211-81-12345 | 통신판매업 : 2023-서울종로-1234호</li>
-        <li>정보보호책임자 : 홍길동</li>
-        <li>영업문의 : 02-123-5678</li>
-        <li>팩스번호 : 02-550-1234</li>
+        <li>${corpinfoDTO.getCompany_name()} | 대표 : ${corpinfoDTO.getCeo_name()}</li>
+        <li>${corpinfoDTO.getAddress()}</li>
+        <li>사업자번호 : ${corpinfoDTO.getBiz_reg_no()} | 통신판매업 : ${corpinfoDTO.getTelecom_sales_no()}</li>
+        <li>정보보호책임자 : ${corpinfoDTO.getPrivacy_officer ()}</li>
+        <li>영업문의 : ${corpinfoDTO.getSales_contact()}</li>
+        <li>팩스번호 : ${corpinfoDTO.getFax_number()}</li>
       </ul>
     </li>
   </ol>

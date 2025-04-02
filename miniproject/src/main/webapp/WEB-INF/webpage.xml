@@ -18,7 +18,7 @@
 	<beans:property name="prefix" value="/" />
 	<beans:property name="suffix" value=".jsp" />
 </beans:bean>
-<context:component-scan base-package="main, member, counsel, type, md" />
+<context:component-scan base-package="main, member, counsel, type, md, reservation" />
 	
 <beans:bean id="multipartResolver"	class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	<beans:property name="defaultEncoding" value="utf-8" />

@@ -61,9 +61,6 @@ public class TypeController {
 		TypeDTO typeDTO = typeDAO.select_onetype(bunyang_index);
 		m.addAttribute("typeDTO", typeDTO);
 		
-		System.out.println("bunyang_units: " + typeDTO.getBunyang_units());
-		System.out.println("bunyang_towers: " + typeDTO.getBunyang_towers());
-		
 		return "WEB-INF/realty/week_tails";
 	}
 }
