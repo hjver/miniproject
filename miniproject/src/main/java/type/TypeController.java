@@ -1,7 +1,9 @@
 package type;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -14,11 +16,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import reservation.ReservationDAO;
+import reservation.ReservationDTO;
+
 @Controller
 public class TypeController {
 
-	@Resource(name="typeDAO")
+	@Resource(name="TypeDAO")
 	TypeDAO typeDAO;
+	
+	@Resource(name="ReservationDAO")
+	ReservationDAO reserveDAO;
 	
 	@GetMapping("/api_alltype.do")
 	@ResponseBody  //JSON 응답을 반환하도록 설정
@@ -56,10 +64,19 @@ public class TypeController {
 	}
 	
 	@GetMapping("/week_tails.do")
-	public String week_tails(@RequestParam("bunyang_index") int bunyang_index, Model m){
+	public String week_tails(@RequestParam("bunyang_index") int bunyang_index,
+			@RequestParam("midx") int midx,
+			Model m){
 		
 		TypeDTO typeDTO = typeDAO.select_onetype(bunyang_index);
+		
+		Map<String, Integer> reserve = new HashMap<>();
+		reserve.put("bunyang_index", bunyang_index);
+		reserve.put("midx", midx);
+		ReservationDTO reserveDTO = reserveDAO.reservation_selectone(reserve);
+		
 		m.addAttribute("typeDTO", typeDTO);
+		m.addAttribute("reserveDTO", reserveDTO);
 		
 		return "WEB-INF/realty/week_tails";
 	}

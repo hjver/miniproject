@@ -11,8 +11,8 @@ values ('0',#{midx},#{visit_date},#{visit_time},#{visitors})
 </insert>
 
 <!-- 방문예약확인 select one -->
-<select id="reservation_selectone" resultType="memberDTO" parameterType="int">
-select * from reservation where midx=#{midx}
+<select id="reservation_selectone" resultType="reservationDTO" parameterType="Map">
+select * from reservation where bunyang_index=#{bunyang_index} and midx=#{midx}
 </select>
 
 </mapper>

@@ -36,8 +36,12 @@
 				<li><img src="${common_path}/room/${typeDTO.getBunyang_img()}"></li>
             </ul>
 		</div>
-        <div><button class="btn_css" onclick="gopage()">방문예약</button></div>
-        <div><button class="btn_close">방문예약완료</button></div>
+		<c:if test="${empty sessionScope.reserveDTO}"> -> 수정할 것
+        	<div><button class="btn_css" onclick="gopage()">방문예약</button></div>
+		</c:if>
+		<c:if test="${not empty sessionScope.reserveDTO}"> -> 수정할 것
+        	<div><a href="/reservation_check.do"><button class="btn_close" >방문예약완료</button></a></div>
+        </c:if>
 	</div>
 	<form id="frm" method="post" action="/reservation.do">
 		<input type="hidden" name="bunyang_title" value="">

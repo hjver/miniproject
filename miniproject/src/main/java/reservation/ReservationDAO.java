@@ -1,9 +1,11 @@
 package reservation;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository("reservationDAO")
+@Repository("ReservationDAO")
 public class ReservationDAO {
 	
 	@Autowired
@@ -13,7 +15,7 @@ public class ReservationDAO {
 		return rMapper.reservation_insert(rdto);
 	}
 	
-	public ReservationDTO reservation_selectone(int midx) {
-		return rMapper.reservation_selectone(midx);
+	public ReservationDTO reservation_selectone(Map<String, Integer> reserve) {
+		return rMapper.reservation_selectone(reserve);
 	}
 }

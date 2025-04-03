@@ -18,21 +18,41 @@
      <li><a href="/counsel.do">상담신청</a></li>
      <li>업체의뢰</li>
      <li>의뢰현황</li>
-     <li class="logins">
-       <c:if test="${not empty sessionScope.userDTO}">
-         <p> ${sessionScope.userDTO.getMname()}님 환영합니다.<a href="/logout.do">[로그아웃]</a></p>
-       </c:if>
-
-       <c:if test="${empty sessionScope.userDTO}">
-         <a href="/login.do">
-           <span title="로그인"><img src="${common_path}/ico/login.svg"></span>
-         </a>
-         <a href="/member_join.do">
-           <span title="회원가입"><img src="${common_path}/ico/membership.svg"></span>
-       	 </a>
-       </c:if>  
-     </li>
+     <li class="logins" onmouseleave="myinfo_menu(2)">
+        <span title="회원정보" onclick="myinfo_menu(1)">
+        <img src="./ico/login.svg">
+        <ul class="login_info" id="login_info" style="display: none;">
+          <c:if test="${empty sessionScope.userDTO}">
+            <li><a href="/login.do">로그인 / 회원가입</a></li>
+          </c:if>
+          <c:if test="${not empty sessionScope.userDTO}">
+            <li>홍길동님 <a href="/logout.do">[로그아웃]</a></li>
+          </c:if>  
+        </ul>
+        </span>
+        <span title="모델 하우스 사전예약 리스트" onclick="reserve_page()"><img src="./ico/reserve_list.svg"></span>
+      </li>
    </ul>
  </div>
 </nav>
+<script>
+    //해당 함수는 모델 하우스 사전 방문예약 확인 리스트 페이지로 이동 되도록 합니다.
+    function reserve_page() {
+
+    }
+    function myinfo_menu(part){
+        var log_menu = document.getElementById("login_info");
+        if(part==1){
+            if(log_menu.style.display == "none"){
+                log_menu.style.display = "block"; 
+            }
+            else{
+                log_menu.style.display = "none"; 
+            }
+        }
+        else{
+            log_menu.style.display = "none"; 
+        }
+    }
+ </script>
 <!--메뉴끝-->

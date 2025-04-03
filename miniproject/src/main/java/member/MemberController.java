@@ -17,12 +17,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import common.Encryptor;
+import reservation.ReservationDAO;
+import reservation.ReservationDTO;
 
 @Controller
 public class MemberController extends Encryptor{
 	
 	@Resource(name="MemberDAO")
 	private MemberDAO mdao;
+	
+	@Resource(name="ReservationDAO")
+	private ReservationDAO rdao;
+	
 	
 	// 회원가입 화면 연결
 	@GetMapping("/member_join.do")
@@ -94,6 +100,7 @@ public class MemberController extends Encryptor{
         
         if(userDTO != null) {
         	session.setAttribute("userDTO", userDTO);
+
         	m.addAttribute("msg", "로그인 되었습니다.");
         	m.addAttribute("url", "/index.do");
         }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ReservationController {
 
-	@Resource
+	@Resource(name="ReservationDAO")
 	ReservationDAO rdao;
 	
 	@PostMapping("/reservation.do")
@@ -42,11 +42,7 @@ public class ReservationController {
 	}
 	
 	@GetMapping("/reservation_check.do")
-	public String reservation_check(@RequestParam("midx") int midx, Model m) {
-		
-		ReservationDTO rdto = rdao.reservation_selectone(midx);
-		m.addAttribute("rdto", rdto);
-		
+	public String reservation_check() {
 		return "WEB-INF/realty/reservation_check";
 	}
 }
