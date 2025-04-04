@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member.MemberMapper">
+
+<!-- 이메일 중복확인을 위한 select one -->
+<select id="selectone_emailck" resultType="Integer">
+select midx from member where memail=#{memail}
+</select>
+
+<!-- 회원 가입 정보 DB 저장 -->
+<insert id="member_insert">
+insert into member (midx,memail,mpasswd,mname,mmobile,age_over14,terms_agree,privacy_agree,marketing_agree,join_date)
+values ('0',#{memail},#{mpasswd},#{mname},#{mmobile},#{age_over14},#{terms_agree},#{privacy_agree},<if test="marketing_agree != null">#{marketing_agree}</if>
+<if test="marketing_agree == null">'N'</if>,now())
+</insert>
+
+<!-- 로그인을 위한 가입자 정보 select one -->
+<select id="selectone_userck" resultType="memberDTO" parameterType="Map">
+select midx,mname,memail,mmobile from member where memail=#{memail} and mpasswd=#{mpasswd}
+</select>
+
+<!-- 이메일 찾기를 위한 가입자 정보 select one -->
+<select id="selectone_emailsearch" resultType="String" parameterType="Map">
+select memail from member where mname=#{mname} and mmobile=#{mmobile}
+</select>
+
+<!-- 비밀번호 찾기를 위한 가입자 정보 select one -->
+<select id="selectone_passwdsearch" resultType="Integer" parameterType="Map">
+select midx from member where memail=#{memail} and mmobile=#{mmobile}
+</select>
+
+<!-- 비밀번호 변경 date -->
+<update id="password_change">
+update member set mpasswd=#{mpasswd} where midx=#{midx}
+</update>
+
+</mapper>

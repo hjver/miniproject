@@ -20,8 +20,10 @@
 <span style="color: blue;">분양정보</span>
 <span style="color: red;">${bunyang_title}</span>
 </span>
-<form id="frm" method="post" action="/reservation_check.do">
+<form id="frm" method="post" action="/reservation_ok.do">
 <input type="hidden" name="midx" value="${sessionScope.userDTO.getMidx()}">
+<input type="hidden" name="bunyang_index" value="${bunyang_index}">
+<input type="hidden" name="bunyang_title" value="${bunyang_title}">
 <ul class="sub_ul">
 <li>방문일시</li>    
 <li><input type="date" class="sel_input" name="visit_date"></li> 
@@ -29,11 +31,11 @@
 <li>
 <select class="sel_input2" name="visit_time">
     <option value="">방문시간선택</option>
-    <option value="09">09:00</option>
-    <option value="11">11:00</option>
-    <option value="13">13:00</option>
-    <option value="15">15:00</option>
-    <option value="17">17:00</option>
+    <option value="09:00:00">09:00</option>
+    <option value="11:00:00">11:00</option>
+    <option value="13:00:00">13:00</option>
+    <option value="15:00:00">15:00</option>
+    <option value="17:00:00">17:00</option>
 </select> * 해당 시간에 맞춰서 방문해 주셔야 합니다.
 </li> 
 <li>방문자명</li>    
@@ -53,21 +55,24 @@
 </form>
 </section>
 </main>
+
 <footer>
   <!-- 카피라이터 -->
   <%@ include file="./copyright.jsp"%>
 </footer>
+
 </body>
 <script>
 function gopage(){
 	var date = new Date(); //today
 	var sdate = date.toISOString().split('T')[0]; //today //2025-04-02
 	var mm = String(date.getMinutes()).padStart(2, "0");
-	var t = date.getHours() + "" + mm;  //시간+분 //1507
+	var ss = String(date.getSeconds()).padStart(2, "0");
+	var t = date.getHours() + "" + mm + "" + ss;  //시간+분 //1507
 	
 	var visit_date = frm.visit_date.value; //사용자 선택일자 //2025-04-02
-	var visit_time = frm.visit_time.value; //사용자가 선택한 시간대 //15
-	var ut = visit_time + "" + "00"; //1500
+	var visit_time = frm.visit_time.value; //사용자가 선택한 시간대 //15:00:00
+	var ut = visit_time.replace(":",""); //150000
 	
 	if(visit_date < sdate){
 		alert("오늘 이후 날짜를 선택하셔야 합니다.")

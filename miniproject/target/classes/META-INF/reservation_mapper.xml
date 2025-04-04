@@ -6,13 +6,13 @@
 
 <!-- 방문 예약 정보 DB 저장 -->
 <insert id="reservation_insert">
-insert into reservation (ridx,midx,bunyang_index,visit_date,visit_time,visitors)
-values ('0',#{midx},#{bunyang_index},#{visit_date},#{visit_time},#{visitors})
+insert into reservation (ridx,midx,visit_date,visit_time,visitors)
+values ('0',#{midx},#{visit_date},#{visit_time},#{visitors})
 </insert>
 
 <!-- 방문예약확인 select one -->
-<select id="reservation_selectone" resultType="reservationDTO" parameterType="Map">
-select * from reservation where midx=#{midx} and bunyang_index=#{bunyang_index}
+<select id="reservation_selectone" resultType="memberDTO" parameterType="int">
+select * from reservation where midx=#{midx}
 </select>
 
 </mapper>

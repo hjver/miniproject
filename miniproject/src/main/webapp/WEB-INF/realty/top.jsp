@@ -26,7 +26,7 @@
             <li><a href="/login.do">로그인 / 회원가입</a></li>
           </c:if>
           <c:if test="${not empty sessionScope.userDTO}">
-            <li>홍길동님 <a href="/logout.do">[로그아웃]</a></li>
+            <li>"${sessionScope.userDTO.getMname()}"님 <a href="/logout.do">[로그아웃]</a></li>
           </c:if>  
         </ul>
         </span>

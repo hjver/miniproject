@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import member.MemberDTO;
 import reservation.ReservationDAO;
 import reservation.ReservationDTO;
 
@@ -64,19 +66,24 @@ public class TypeController {
 	}
 	
 	@GetMapping("/week_tails.do")
-	public String week_tails(@RequestParam("bunyang_index") int bunyang_index,
-			@RequestParam("midx") int midx,
-			Model m){
+	public String week_tails(@RequestParam("key") int bunyang_index,
+			HttpSession session, Model m){
 		
 		TypeDTO typeDTO = typeDAO.select_onetype(bunyang_index);
 		
+		MemberDTO userDTO = (MemberDTO)session.getAttribute("userDTO");
+		int midx = userDTO.getMidx();
 		Map<String, Integer> reserve = new HashMap<>();
-		reserve.put("bunyang_index", bunyang_index);
 		reserve.put("midx", midx);
+		reserve.put("bunyang_index", bunyang_index);
 		ReservationDTO reserveDTO = reserveDAO.reservation_selectone(reserve);
 		
+		Boolean reserved = false;  //midx, bunyang_index 예약여부
+		if(reserveDTO != null) {
+			reserved = true;
+		}
 		m.addAttribute("typeDTO", typeDTO);
-		m.addAttribute("reserveDTO", reserveDTO);
+		m.addAttribute("reserved", reserved);
 		
 		return "WEB-INF/realty/week_tails";
 	}

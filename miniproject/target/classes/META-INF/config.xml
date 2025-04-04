@@ -21,7 +21,6 @@
 	<typeAlias alias="mdDTO" type="md.MDDTO"/>
 	<typeAlias alias="counseluserDTO" type="counsel.CounselUserDTO"/>
 	<typeAlias alias="reservationDTO" type="reservation.ReservationDTO"/>
-	<typeAlias alias="noticeDTO" type="notice.NoticeDTO"/>
 </typeAliases>
 
 </configuration>

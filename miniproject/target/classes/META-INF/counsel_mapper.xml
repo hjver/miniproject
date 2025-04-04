@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="counsel.CounselMapper">
+
+<!-- 상담자 정보 DB 저장 -->
+<insert id="counselinfo_insert">
+insert into counsel_user (cidx,midx,rental_type,housing_type,preferred_date,ctext)
+values ('0',#{midx},#{rental_type_toString},#{housing_type_toString},#{preferred_date},#{ctext})
+</insert>
+
+</mapper>

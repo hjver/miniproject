@@ -52,7 +52,7 @@ function view_type(){
 function go_href(n){
 	var userDTO = '${sessionScope.userDTO}';
 	if(userDTO && userDTO !== 'null' && userDTO !== ''){ //세션에 값이 있을 경우, 해당 페이지로 이동
-		window.location.href = "/week_tails.do?bunyang_index=" + data_type["type_db"][n]["bunyang_index"];
+		window.location.href = "/week_tails.do?key=" + data_type["type_db"][n]["bunyang_index"];
 	}
 	else{ //세션에 값이 없으면 로그인 페이지로 리다이렉트
 		alert("해당 사이트는 로그인이 필요합니다."); 
