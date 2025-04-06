@@ -10,6 +10,7 @@ public class MemberDTO {
 	String memail,mpasswd,mname,mmobile;
 	String age_over14,terms_agree,privacy_agree, marketing_agree;
 	String join_date;
+	
 	public int getMidx() {
 		return midx;
 	}

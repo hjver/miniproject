@@ -15,4 +15,20 @@ values ('0',#{midx},#{bunyang_index},#{visit_date},#{visit_time},#{visitors})
 select * from reservation where midx=#{midx} and bunyang_index=#{bunyang_index}
 </select>
 
+<!-- 방문예약 전체 select all -->
+<select id="reservation_selectall" resultType="reservationDTO" parameterType="int">
+select r.ridx, t.bunyang_title, r.visit_date, r.visit_time, r.visitors from reservation r 
+join member m on r.midx = m.midx join type_db t on r.bunyang_index = t.bunyang_index where r.midx=#{midx} order by ridx 
+</select>
+
+<!-- 개수만 구하는 쿼리 -->
+<select id="reservation_count" resultType="int" parameterType="int">
+select count(*) from reservation where midx=#{midx}
+</select>
+
+<!-- 선택 예약 삭제 -->
+<delete id="reservation_delete" parameterType="int">
+delete from reservation where ridx=#{ridx}
+</delete>
+
 </mapper>

@@ -14,5 +14,9 @@ public class MDDAO {
 	public List<MDDTO> select_allmd() {
 		return mdMapper.select_allmd();
 	}
+	
+	public MDDTO select_onemd(int md_idx) {
+		return mdMapper.select_onemd(md_idx);
+	}
 }
 

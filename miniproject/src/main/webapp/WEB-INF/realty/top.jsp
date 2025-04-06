@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="common_path" value="${pageContext.request.contextPath}/resources" />
 <!--최상단-->
 <header>
@@ -15,7 +15,7 @@
      <li>일반매물</li>
      <li>추천매물</li>
      <li>중계의뢰</li>
-     <li><a href="/counsel.do">상담신청</a></li>
+     <li><a onclick="go_page('/counsel.do')">상담신청</a></li>
      <li>업체의뢰</li>
      <li>의뢰현황</li>
      <li class="logins" onmouseleave="myinfo_menu(2)">
@@ -30,16 +30,29 @@
           </c:if>  
         </ul>
         </span>
-        <span title="모델 하우스 사전예약 리스트" onclick="reserve_page()"><img src="./ico/reserve_list.svg"></span>
+        <span title="모델 하우스 사전예약 리스트" onclick="go_page('/reservation_list.do')"><img src="./ico/reserve_list.svg"></span>
       </li>
    </ul>
  </div>
 </nav>
+<form id="frm_top" method="post" style="all: unset;">
+  <input type="hidden" name="midx">
+</form>
 <script>
-    //해당 함수는 모델 하우스 사전 방문예약 확인 리스트 페이지로 이동 되도록 합니다.
-    function reserve_page() {
-
+    //로그인 여부에 따른 해당 페이지 이
+    function go_page(go_url) {
+    	var userDTO = '${sessionScope.userDTO}';
+    	if(userDTO && userDTO != 'null' && userDTO != ''){ //세션에 값이 있을 경우, 해당 페이지로 이동
+    		frm_top.midx.value = '${sessionScope.userDTO.midx}';
+    		frm_top.action = go_url;
+    		frm_top.submit();
+    	}
+    	else{ //세션에 값이 없으면 로그인 페이지로 리다이렉트
+    		alert("해당 사이트는 로그인이 필요합니다."); 
+    		window.location.href = "/login.do";
+    	}
     }
+    
     function myinfo_menu(part){
         var log_menu = document.getElementById("login_info");
         if(part==1){

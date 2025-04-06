@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="common_path" value="${pageContext.request.contextPath}/resources" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>추천분양 정보 게시판</title>
-<link rel="stylesheet" type="text/css" href="./css/index.css?v=1">
-<link rel="stylesheet" type="text/css" href="./css/md_board.css?v=5">
+<link rel="stylesheet" type="text/css" href="${common_path}/css/index.css?v=1">
+<link rel="stylesheet" type="text/css" href="${common_path}/css/md_board.css?v=5">
 <style>
 .box {
    width: 800px;
@@ -21,7 +23,7 @@
 <body>
 <!-- 최상단 및 메뉴 -->
   <%@ include file="./top.jsp"%>
-  
+ 
 <main>
     <section class="sub">
         <p>추천분양 정보 게시판</p>
@@ -34,18 +36,23 @@
             <li>조회수</li>
             <li>등록일</li>
           </ul>
-          <c:if test=${notice_all == null}>
-          <ul style="display: none;"><li class="nodata">등록된 게시물이 없습니다.</li></ul>
+          
+          <c:if test="${empty md_all}">
+          <ul style="display: block;"><li class="nodata">등록된 게시물이 없습니다.</li></ul>
           </c:if>
-          <c:if test=${notice_all != null}>
+          
+          <c:if test="${not empty md_all}">
+          <c:forEach var="md" items="${md_all}" varStatus="no">
           <ul class="data_view">
-            <li>${notice_all.getNidx()}</li>
-            <li style="text-align: left;">${notice_all.getNtitle()}</li>
-            <li>${notice_all.getNwriter()}</li>
-            <li>${notice_all.getNview()}</li>
-            <li>${notice_all.getNdate()}</li>
+            <li>${md_all.size() - no.index}</li>
+            <li style="text-align: left;"><a href="/md_board_view.do?key=${md.md_idx}"><c:out value="${md.md_title}"/></a></li> <!-- '<br>'이 텍스트로 출력 -->
+            <li>${md.nwriter}</li>
+            <li>${md.nviews}</li>
+            <li>${fn:substring(md.reg_date, 0, 10)}</li>
           </ul>
+          </c:forEach>
           </c:if>
+          
         </div>
         <div class="info_pageing">
           <ol>

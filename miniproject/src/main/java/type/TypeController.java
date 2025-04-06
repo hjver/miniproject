@@ -72,18 +72,20 @@ public class TypeController {
 		TypeDTO typeDTO = typeDAO.select_onetype(bunyang_index);
 		
 		MemberDTO userDTO = (MemberDTO)session.getAttribute("userDTO");
-		int midx = userDTO.getMidx();
-		Map<String, Integer> reserve = new HashMap<>();
-		reserve.put("midx", midx);
-		reserve.put("bunyang_index", bunyang_index);
-		ReservationDTO reserveDTO = reserveDAO.reservation_selectone(reserve);
-		
-		Boolean reserved = false;  //midx, bunyang_index 예약여부
-		if(reserveDTO != null) {
-			reserved = true;
+		if(userDTO != null) {
+			int midx = userDTO.getMidx();
+			Map<String, Integer> reserve = new HashMap<>();
+			reserve.put("midx", midx);
+			reserve.put("bunyang_index", bunyang_index);
+			ReservationDTO reserveDTO = reserveDAO.reservation_selectone(reserve);
+			
+			Boolean reserved = false;  //midx, bunyang_index 예약여부
+			if(reserveDTO != null) {
+				reserved = true;
+			}
+			m.addAttribute("typeDTO", typeDTO);
+			m.addAttribute("reserved", reserved);
 		}
-		m.addAttribute("typeDTO", typeDTO);
-		m.addAttribute("reserved", reserved);
 		
 		return "WEB-INF/realty/week_tails";
 	}

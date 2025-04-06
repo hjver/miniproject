@@ -9,4 +9,5 @@ import type.TypeDTO;
 @Mapper
 public interface MDMapper {
 	public List<MDDTO> select_allmd();
+	public MDDTO select_onemd(int md_idx);
 }

@@ -8,6 +8,7 @@ public class TypeDTO {
 	String bunyang_title,bunyang_addr,bunyang_part,bunyang_info;
 	String bunyang_date,bunyang_in,bunyang_img,bunyang_str;
 	String bunyang_company,bunyang_tag;
+	
 	public int getBunyang_index() {
 		return bunyang_index;
 	}

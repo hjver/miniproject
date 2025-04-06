@@ -4,13 +4,20 @@ import lombok.Data;
 
 @Data
 public class MDDTO {
-	int md_index;
-	String md_title,md_detail,md_img,md_link;
-	public int getMd_index() {
-		return md_index;
+	int md_idx,nviews;
+	String md_title,md_detail,md_img_ori,md_img_pass,nwriter,reg_date;
+	
+	public int getMd_idx() {
+		return md_idx;
 	}
-	public void setMd_index(int md_index) {
-		this.md_index = md_index;
+	public void setMd_idx(int md_idx) {
+		this.md_idx = md_idx;
+	}
+	public int getNviews() {
+		return nviews;
+	}
+	public void setNviews(int nviews) {
+		this.nviews = nviews;
 	}
 	public String getMd_title() {
 		return md_title;
@@ -24,17 +31,28 @@ public class MDDTO {
 	public void setMd_detail(String md_detail) {
 		this.md_detail = md_detail;
 	}
-	public String getMd_img() {
-		return md_img;
+	public String getMd_img_ori() {
+		return md_img_ori;
 	}
-	public void setMd_img(String md_img) {
-		this.md_img = md_img;
+	public void setMd_img_ori(String md_img_ori) {
+		this.md_img_ori = md_img_ori;
 	}
-	public String getMd_link() {
-		return md_link;
+	public String getMd_img_pass() {
+		return md_img_pass;
 	}
-	public void setMd_link(String md_link) {
-		this.md_link = md_link;
+	public void setMd_img_pass(String md_img_pass) {
+		this.md_img_pass = md_img_pass;
 	}
-	
+	public String getNwriter() {
+		return nwriter;
+	}
+	public void setNwriter(String nwriter) {
+		this.nwriter = nwriter;
+	}
+	public String getReg_date() {
+		return reg_date;
+	}
+	public void setReg_date(String reg_date) {
+		this.reg_date = reg_date;
+	}	
 }

@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="common_path" value="${pageContext.request.contextPath}/resources" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>모댈 하우스 사전 방문예약</title>
-<link rel="stylesheet" type="text/css" href="./css/index.css?v=1">
-<link rel="stylesheet" type="text/css" href="./css/reservation.css?v=4">
+<link rel="stylesheet" type="text/css" href="${common_path}/css/index.css?v=1">
+<link rel="stylesheet" type="text/css" href="${common_path}/css/reservation.css?v=4">
 </head>
 <body>
 <!-- 최상단 및 메뉴 -->

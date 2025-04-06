@@ -6,7 +6,12 @@
 
 <!-- 전체 데이터 출력 -->
 <select id="select_allmd" resultType="mdDTO">
-select * from md_db order by md_index desc
+select * from md_notice order by md_idx desc
+</select>
+
+<!-- 데이터 1개 출력 -->
+<select id="select_onemd" resultType="mdDTO" parameterType="int">
+select * from md_notice where md_idx=#{md_idx}
 </select>
 
 </mapper>

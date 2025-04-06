@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="common_path" value="${pageContext.request.contextPath}/resources" />
 <section>
   <div class="weekdays">
@@ -51,7 +51,7 @@ function view_type(){
 
 function go_href(n){
 	var userDTO = '${sessionScope.userDTO}';
-	if(userDTO && userDTO !== 'null' && userDTO !== ''){ //세션에 값이 있을 경우, 해당 페이지로 이동
+	if(userDTO && userDTO != 'null' && userDTO != ''){ //세션에 값이 있을 경우, 해당 페이지로 이동
 		window.location.href = "/week_tails.do?key=" + data_type["type_db"][n]["bunyang_index"];
 	}
 	else{ //세션에 값이 없으면 로그인 페이지로 리다이렉트

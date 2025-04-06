@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CounselController {
@@ -14,8 +15,8 @@ public class CounselController {
 	@Resource(name="CounselDAO")
 	private CounselDAO cdao;
 
-	@GetMapping("/counsel.do")
-	public String counsel() {
+	@PostMapping("/counsel.do")
+	public String counsel(@RequestParam("midx") int midx) {
 		return "WEB-INF/realty/counsel";
 	}
 	

@@ -2,9 +2,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>모댈 하우스 사전 방문예약</title>
+<title>패스워드 찾기 및 변경</title>
 <link rel="stylesheet" type="text/css" href="./css/index.css?v=1">
-<link rel="stylesheet" type="text/css" href="./css/reservation.css?v=4">
+<link rel="stylesheet" type="text/css" href="./css/search_myinfo.css?v=2">
 </head>
 <body>
 <!--최상단-->
@@ -36,40 +36,16 @@
     <!--메뉴끝-->
 <main>
 <section class="sub">
-<p>모델 하우스 사전 방문예약</p>
 <div>
-<span class="list_title">
-<span style="color: blue;">분양정보</span>
-<span style="color: red;">LH센트럴힐(공공임대)</span>
-</span>
-<ul class="sub_ul">
-<li>방문일시</li>    
-<li><input type="date" class="sel_input"></li> 
-<li>방문시간</li>    
-<li>
-<select class="sel_input2">
-    <option value="">방문시간선택</option>
-    <option value="09:00">09:00</option>
-    <option value="11:00">11:00</option>
-    <option value="13:00">13:00</option>
-    <option value="15:00">15:00</option>
-    <option value="17:00">17:00</option>
-</select> * 해당 시간에 맞춰서 방문해 주셔야 합니다.
-</li> 
-<li>방문자명</li>    
-<li><input type="text" class="sel_input" readonly></li> 
-<li>방문인원</li>    
-<li>
-<label><input type="radio" class="sel_check" checked> 1명</label>
-<label><input type="radio" class="sel_check"> 2명</label> ※ 방문인원은 최대 2명까지 입니다.
-</li>   
-<li>연락처</li>    
-<li><input type="text" class="sel_input" readonly></li>       
+<ul>
+<li>회원가입 정보에 따른 패스워드 변경</li>
 </ul>
 </div>
-<div>
-<input type="button" value="방문 예약등록">
+<div class="text1 repass">
+<div><input type="password" placeholder="최소 10 ~ 16자 (영문,숫자,특수 문자 조합)로 입력해주세요." class="passin" autocomplete="none"></div>
+<div><input type="password" placeholder="동일한 비밀번호를 입력하세요" class="passin" autocomplete="none"></div>
 </div>
+<div><input type="button" value="비밀번호 변경" class="search_submit"></div>
 </section>
 </main>
 <!-- 카피라이터 -->

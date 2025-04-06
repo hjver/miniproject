@@ -1,20 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="common_path"
-	value="${pageContext.request.contextPath}/resources" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="common_path" value="${pageContext.request.contextPath}/resources" />
 <section>
 	<div class="recommend">
 		<p>
-			추천분양정보<br>
-			<em>실시간 추천 분양정보를 한곳에!</em>
+			<a href="/md_board.do">추천분양정보</a><br>
+			<em><a href="/md_board.do">실시간 추천 분양정보를 한곳에!</a></em>
 		</p>
 		<div class="md_estates">
 			<ul>
 				<c:forEach var="n" begin="0" end="3">
-					<a id="${'md_link'}${n}" href="">
+					<a href="/md_board.do">
 						<li>
-							<div><img id="${'md_img'}${n}" src=""></div>
+							<div><img id="${'md_img_ori'}${n}" src=""></div>
 							<span id="${'md_title'}${n}"></span>
 							<div id="${'md_detail'}${n}"></div>
 						</li>
@@ -38,12 +37,11 @@ http_md.send();
 
 var common_path = "${common_path}";
 function view_md(){
-	for(var n=0; n<data_md["md_db"].length;n++) {
-		var nth_md = data_md["md_db"][n];
-		document.getElementById("md_link"+n).href = nth_md["md_link"];
-		document.getElementById("md_img"+n).src = common_path + "/md_room/" + nth_md["md_img"];
-		document.getElementById("md_title"+n).innerText = nth_md["md_title"];
-		document.getElementById("md_detail"+n).innerText = nth_md["md_detail"];
+	for(var n=0; n<data_md["md_notice"].length;n++) {
+		var nth_md = data_md["md_notice"][n];
+		document.getElementById("md_img_ori"+n).src = common_path + "/md_room/" + nth_md["md_img_ori"];
+		document.getElementById("md_title"+n).innerHTML = nth_md["md_title"];
+		document.getElementById("md_detail"+n).innerHTML = nth_md["md_detail"];
 	}
 }
 </script>
