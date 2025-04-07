@@ -18,5 +18,9 @@ public class MDDAO {
 	public MDDTO select_onemd(int md_idx) {
 		return mdMapper.select_onemd(md_idx);
 	}
+	
+	public int update_mdviews(int md_idx) {
+		return mdMapper.update_mdviews(md_idx);
+	}
 }
 

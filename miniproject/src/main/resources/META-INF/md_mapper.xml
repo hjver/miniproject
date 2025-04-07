@@ -14,4 +14,9 @@ select * from md_notice order by md_idx desc
 select * from md_notice where md_idx=#{md_idx}
 </select>
 
+<!-- 조회수 증가 -->
+<update id="update_mdviews" parameterType="int">
+update md_notice set nviews=nviews+1 where md_idx=#{md_idx}
+</update>
+
 </mapper>
