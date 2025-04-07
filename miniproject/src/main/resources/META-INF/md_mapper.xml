@@ -4,18 +4,33 @@
 
 <mapper namespace="md.MDMapper">
 
-<!-- 전체 데이터 출력 -->
-<select id="select_allmd" resultType="mdDTO">
-select * from md_notice order by md_idx desc
+<!-- 전체 데이터 갯수 -->
+<select id="count_md_all" resultType="int">
+select count(*) from md_notice
+</select>
+
+<!-- 전체 데이터 페이지 출력 -->
+<select id="select_md_pageall" resultType="mdDTO" parameterType="Map">
+select * from md_notice order by md_idx desc limit #{pageno}, #{cnt_per_page}
+</select>
+
+<!-- 검색 데이터 갯수 -->
+<select id="count_md_searchall" resultType="int">
+select count(*) from md_notice
+</select>
+
+<!-- 검색 데이터 페이지 출력 -->
+<select id="select_md_searchall" resultType="mdDTO" parameterType="Map">
+select * from md_notice where md_title like concat('%',#{search},'%') order by md_idx desc limit #{pageno}, #{cnt_per_page}
 </select>
 
 <!-- 데이터 1개 출력 -->
-<select id="select_onemd" resultType="mdDTO" parameterType="int">
+<select id="select_md_one" resultType="mdDTO" parameterType="int">
 select * from md_notice where md_idx=#{md_idx}
 </select>
 
 <!-- 조회수 증가 -->
-<update id="update_mdviews" parameterType="int">
+<update id="update_views_md" parameterType="int">
 update md_notice set nviews=nviews+1 where md_idx=#{md_idx}
 </update>
 

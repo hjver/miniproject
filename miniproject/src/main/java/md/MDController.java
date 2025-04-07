@@ -1,7 +1,9 @@
 package md;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MDController {
+	
+	private static final int cnt_main = 4;  //메인메이지 MD 노출갯수
+	private static final int cnt_per_page = 10; //페이지당 출력 갯수
 
 	@Resource(name="mdDAO")
 	MDDAO mdDAO;
@@ -27,12 +32,15 @@ public class MDController {
 		res.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = res.getWriter();
 		
-		List<MDDTO> all = this.mdDAO.select_allmd();
+		Map<String, Integer> pageinfo = new HashMap<String, Integer>();
+		pageinfo.put("pageno", 0);
+		pageinfo.put("cnt_per_page", cnt_main);
+		List<MDDTO> md_pageall = this.mdDAO.select_md_pageall(pageinfo);
 		
 		JSONObject alldata = new JSONObject();
 		int i=0;
 		JSONArray ja = new JSONArray();
-		for(MDDTO dto : all) {
+		for(MDDTO dto : md_pageall) {
 			JSONObject jo = new JSONObject();	
 	        jo.put("md_idx", dto.getMd_idx());
 	        jo.put("md_title", dto.getMd_title());
@@ -48,10 +56,39 @@ public class MDController {
 	}
 	
 	@GetMapping("/md_board.do")
-	public String md_board(Model m) {
+	public String md_board(Model m,
+			@RequestParam(defaultValue="", required=false) String search,
+			@RequestParam(defaultValue="1", required=false) Integer pageno
+			) {
 		
-		List<MDDTO> md_all = this.mdDAO.select_allmd();
-		m.addAttribute("md_all", md_all);
+		int total;
+		int pageno_cnt;
+		List<MDDTO> md_pageall;
+		
+		if(search.equals("")) {  //검색어가 없는 경우(전체) 
+			total = this.mdDAO.count_md_all();
+			pageno_cnt = (int)Math.ceil((double)total/(double)cnt_per_page);  //페이지번호 갯수
+		
+			Map<String, Integer> pageinfo = new HashMap<String, Integer>();
+			pageinfo.put("pageno", pageno-1);
+			pageinfo.put("cnt_per_page", cnt_per_page);
+			md_pageall = this.mdDAO.select_md_pageall(pageinfo);
+		}
+		else {  //검색어가 있는 경우 
+			total = this.mdDAO.count_md_searchall(search);
+			pageno_cnt = (int)Math.ceil((double)total/(double)cnt_per_page);  //페이지번호 갯수
+		
+			Map<String, Object> searchinfo = new HashMap<String, Object>();
+			searchinfo.put("search", search);
+			searchinfo.put("pageno", pageno-1);
+			searchinfo.put("cnt_per_page", cnt_per_page);
+			md_pageall = this.mdDAO.select_md_searchall(searchinfo);
+		}
+		
+		m.addAttribute("total", total);
+		m.addAttribute("pageno_cnt", pageno_cnt);
+		m.addAttribute("md_pageall", md_pageall);
+		m.addAttribute("search", search);
 		
 		return "/WEB-INF/realty/md_board";
 	}
@@ -59,7 +96,9 @@ public class MDController {
 	@GetMapping("/md_board_view.do")
 	public String md_board_view(@RequestParam("key") int md_idx,  Model m) {
 		
-		MDDTO mdDTO = this.mdDAO.select_onemd(md_idx);
+		this.mdDAO.update_views_md(md_idx);
+		
+		MDDTO mdDTO = this.mdDAO.select_md_one(md_idx);
 		m.addAttribute("mdDTO", mdDTO);
 		
 		return "/WEB-INF/realty/md_board_view";
@@ -73,8 +112,11 @@ public class MDController {
 	@PostMapping("/md_board_write_ok.do")
 	public String md_board_write_ok(MDDTO mdDTO, Model m) {
 		
-		List<MDDTO> md_all = this.mdDAO.select_allmd();
-		m.addAttribute("md_all", md_all);
+		Map<String, Integer> pageinfo = new HashMap<String, Integer>();
+		pageinfo.put("pageno", 0);
+		pageinfo.put("cnt_per_page", cnt_per_page);
+		List<MDDTO> md_pageall = this.mdDAO.select_md_pageall(pageinfo);
+		m.addAttribute("md_all", md_pageall);
 		
 		return "/WEB-INF/realty/md_board";
 	}

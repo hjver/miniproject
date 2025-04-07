@@ -37,14 +37,14 @@
             <li>등록일</li>
           </ul>
           
-          <c:if test="${empty md_all}">
+          <c:if test="${empty md_pageall}">
           <ul style="display: block;"><li class="nodata">등록된 게시물이 없습니다.</li></ul>
           </c:if>
           
-          <c:if test="${not empty md_all}">
-          <c:forEach var="md" items="${md_all}" varStatus="no">
+          <c:if test="${not empty md_pageall}">
+          <c:forEach var="md" items="${md_pageall}" varStatus="no">
           <ul class="data_view">
-            <li>${md_all.size() - no.index}</li>
+            <li>${total - no.index}</li>
             <li style="text-align: left;"><a href="/md_board_view.do?key=${md.md_idx}"><c:out value="${md.md_title}"/></a></li> <!-- '<br>'이 텍스트로 출력 -->
             <li>${md.nwriter}</li>
             <li>${md.nviews}</li>
@@ -56,15 +56,17 @@
         </div>
         <div class="info_pageing">
           <ol>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
+            <c:forEach var="no" begin="1" end="${pageno_cnt}">
+            <li><a href="/md_board.do?pageno=${no}">${no}</a></li>
+            </c:forEach>
           </ol>
         </div>
+        <form id="frm" method="get" action="/md_board.do">
         <div class="info_search">
-          <input type="text" class="search_text" placeholder="검색어를 입력하세요">
-          <input type="button" value="검색" class="search_btn">
+          <input type="text" class="search_text" name="search" value="${search}" placeholder="검색어를 입력하세요">
+          <input type="button" value="검색" class="search_btn" onclick="go_search()">
         </div>
+        </form>
     </section>
 </main>
 
@@ -74,4 +76,9 @@
 </footer>
 
 </body>
+<script>
+function go_search(){
+	frm.submit();
+}
+</script>
 </html>
