@@ -34,4 +34,10 @@ select * from md_notice where md_idx=#{md_idx}
 update md_notice set nviews=nviews+1 where md_idx=#{md_idx}
 </update>
 
+<!-- 게시물 정보 DB 저장 -->
+<insert id="insert_md_notice">
+insert into md_notice (md_idx,md_title,md_detail,md_img_ori,md_img_path,nwriter,nviews,reg_date)
+values ('0',#{md_title},#{md_detail},#{md_img_ori},#{md_img_path},#{nwriter},#{nviews},now())
+</insert>
+
 </mapper>

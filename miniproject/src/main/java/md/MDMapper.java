@@ -15,4 +15,5 @@ public interface MDMapper {
 	public List<MDDTO> select_md_searchall(Map<String, Object> searchinf);
 	public MDDTO select_md_one(int md_idx);
 	public int update_views_md(int md_idx);
+	public int insert_md_notice(MDDTO mdDTO);
 }

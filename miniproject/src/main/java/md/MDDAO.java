@@ -35,5 +35,9 @@ public class MDDAO {
 	public int update_views_md(int md_idx) {
 		return mdMapper.update_views_md(md_idx);
 	}
+	
+	public int insert_md_notice(MDDTO mdDTO) {
+		return mdMapper.insert_md_notice(mdDTO);
+	}
 }
 

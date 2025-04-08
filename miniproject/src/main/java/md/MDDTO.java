@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class MDDTO {
 	int md_idx,nviews;
-	String md_title,md_detail,md_img_ori,md_img_pass,nwriter,reg_date;
+	String md_title,md_detail,md_img_ori,md_img_path,nwriter,reg_date;
 	
 	public int getMd_idx() {
 		return md_idx;
@@ -37,11 +37,11 @@ public class MDDTO {
 	public void setMd_img_ori(String md_img_ori) {
 		this.md_img_ori = md_img_ori;
 	}
-	public String getMd_img_pass() {
-		return md_img_pass;
+	public String getMd_img_path() {
+		return md_img_path;
 	}
-	public void setMd_img_pass(String md_img_pass) {
-		this.md_img_pass = md_img_pass;
+	public void setMd_img_path(String md_img_path) {
+		this.md_img_path = md_img_path;
 	}
 	public String getNwriter() {
 		return nwriter;
