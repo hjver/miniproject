@@ -13,7 +13,7 @@
 				<c:forEach var="n" begin="0" end="3">
 					<a href="/md_board.do">
 						<li>
-							<div><img id="${'md_img_ori'}${n}" src=""></div>
+							<div><img id="${'md_img_path'}${n}" src=""></div>
 							<span id="${'md_title'}${n}"></span>
 							<div id="${'md_detail'}${n}"></div>
 						</li>
@@ -39,7 +39,7 @@ var common_path = "${common_path}";
 function view_md(){
 	for(var n=0; n<data_md["md_notice"].length;n++) {
 		var nth_md = data_md["md_notice"][n];
-		document.getElementById("md_img_ori"+n).src = common_path + "/md_room/" + nth_md["md_img_ori"];
+		document.getElementById("md_img_path"+n).src = nth_md["md_img_path"]
 		document.getElementById("md_title"+n).innerHTML = nth_md["md_title"];
 		document.getElementById("md_detail"+n).innerHTML = nth_md["md_detail"];
 	}

@@ -28,7 +28,7 @@ public class MDController {
 	
 	private static final int cnt_main = 4;  //메인메이지 MD 노출갯수
 	private static final int cnt_per_page = 10; //페이지당 출력 갯수
-	private static final String upload_dir = "/md_room/";
+	private static final String upload_dir = "/resources/md_room/";
 
 	@Resource(name="mdDAO")
 	MDDAO mdDAO;
@@ -55,7 +55,7 @@ public class MDController {
 	        jo.put("md_idx", dto.getMd_idx());
 	        jo.put("md_title", dto.getMd_title());
 	        jo.put("md_detail", dto.getMd_detail());
-	        jo.put("md_img_ori", dto.getMd_img_ori());
+	        jo.put("md_img_path", dto.getMd_img_path());
 	        ja.put(jo);
 		}
 		alldata.put("md_notice", ja);
@@ -126,7 +126,6 @@ public class MDController {
 		String newfilenm = this.fileRename.rename(orifilenm);
 		String uploadpath = req.getServletContext().getRealPath(upload_dir);
 		File upload_full_dir = new File(uploadpath);
-		System.out.println(upload_full_dir + newfilenm);
 		// 디렉토리가 없으면 생성
 		if (!upload_full_dir.exists()) {
 			upload_full_dir.mkdirs();
