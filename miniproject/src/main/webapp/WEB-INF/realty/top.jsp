@@ -20,7 +20,7 @@
      <li>의뢰현황</li>
      <li class="logins" onmouseleave="myinfo_menu(2)">
         <span title="회원정보" onclick="myinfo_menu(1)">
-        <img src="./ico/login.svg">
+        <img src="${common_path}/ico/login.svg">
         <ul class="login_info" id="login_info" style="display: none;">
           <c:if test="${empty sessionScope.userDTO}">
             <li><a href="/login.do">로그인 / 회원가입</a></li>
@@ -30,7 +30,7 @@
           </c:if>  
         </ul>
         </span>
-        <span title="모델 하우스 사전예약 리스트" onclick="go_page('/reservation_list.do')"><img src="./ico/reserve_list.svg"></span>
+        <span title="모델 하우스 사전예약 리스트" onclick="go_page('/reservation_list.do')"><img src="${common_path}/ico/reserve_list.svg"></span>
       </li>
    </ul>
  </div>

@@ -2,9 +2,11 @@ package member;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.dao.DuplicateKeyException;
@@ -29,10 +31,12 @@ public class MemberController extends Encryptor{
 	@Resource(name="ReservationDAO")
 	private ReservationDAO rdao;
 	
-	
 	// 회원가입 화면 연결
 	@GetMapping("/member_join.do")
-	public String member_join() {
+	public String member_join(@RequestParam(name="code", required=false, defaultValue="1") String code, Model m) {
+		
+		m.addAttribute("code", code);
+		
         return "WEB-INF/realty/member_join";  //회원가입 화면 uri : WEB-INF/realty/member_join.jsp
 	}
 	
@@ -54,18 +58,32 @@ public class MemberController extends Encryptor{
 	
 	// 회원가입 정보 DB 저장
 	@PostMapping("/member_join_ok.do")
-	public String member_join_ok(MemberDTO mdto, Model m) {
+	public String member_join_ok(MemberDTO mdto, HttpSession session, Model m) {
 	    try {
-	        // 패스워드 암호화
+	    	
+	    	//카카오 로그인 사용자 이메일은 kakao_user로 입력함
+	    	if(mdto.getMcode()==2) {
+	    		mdto.setMemail("kakao_user");
+	    	}
+	    	
+	        // 패스워드 암호화"
 	        mdto.setMpasswd(encodePassword(mdto.getMpasswd()));
-
+	       
 	        // DB 저장 시도
 	        int result = mdao.member_insert(mdto);
 	        
 	        // 성공 메시지 및 이동
 	        if(result > 0) {
-		        m.addAttribute("msg", "회원가입이 정상적으로 완료되었습니다.");
-		        m.addAttribute("url", "/login.do"); // 로그인 페이지로 이동
+	        	if(mdto.getMcode()==1) {
+	        		m.addAttribute("msg", "회원가입이 정상적으로 완료되었습니다.");
+	        		m.addAttribute("url", "/login.do"); // 로그인 페이지로 이동	        		
+	        	}
+	        	else if(mdto.getMcode()==2) {
+		        	session.setAttribute("userDTO", mdto);
+
+		        	m.addAttribute("msg", "간편 회원가입이 완료되고 로그인 되었습니다.");
+		        	m.addAttribute("url", "/index.do");	        		
+	        	} 
 	        }
 	    } catch (DuplicateKeyException e) {
 	        // 중복 오류 발생 시
@@ -83,32 +101,61 @@ public class MemberController extends Encryptor{
 	// 로그인 화면 연결
 	@GetMapping("/login.do")
 	public String login() {
+		
         return "WEB-INF/realty/login";  //login 화면 uri : WEB-INF/realty/login.jsp
 	}
-	
-	// 로그인 정보 확인 및 로그인
+		
 	@PostMapping("/login_ok.do")
-	public String login_ok(MemberDTO mdto, HttpSession session, Model m) {
-		// 패스워드 암호화
-        mdto.setMpasswd(encodePassword(mdto.getMpasswd()));
-        
-        // 가입자 DB정보 확인
-        Map<String, String> user = new HashMap<>();
-        user.put("memail", mdto.getMemail());
-        user.put("mpasswd", mdto.getMpasswd());
-        MemberDTO userDTO = this.mdao.selectone_userck(user);
-        
-        if(userDTO != null) {
-        	session.setAttribute("userDTO", userDTO);
+	public String login_ok(@RequestParam(name="code") String code,
+			@RequestParam(name="memail", required=false) String memail,
+			@RequestParam(name="mpasswd", required=false) String mpasswd,
+			@RequestParam(name="kakao_id", required=false) String kakao_id,
+			@RequestParam(name="kakao_nicknm", required=false) String kakao_nicknm,
+			HttpSession session, Model m,
+			HttpServletRequest req
+			) throws Exception{
 
-        	m.addAttribute("msg", "로그인 되었습니다.");
-        	m.addAttribute("url", "/index.do");
-        }
-        else {
-        	m.addAttribute("msg", "이메일 또는 패스워드가 다릅니다. 정확하게 입력해 주세요.");
-        	m.addAttribute("url", "/login.do");
-        }
-        
+		if(code.equals("1")) { //일반로그인 처리
+			// 패스워드 암호화
+	        String encode_pass = encodePassword(mpasswd);
+	        
+	        // 가입자 DB정보 확인
+	        Map<String, String> user = new HashMap<>();
+	        user.put("code", "normal");
+	        user.put("memail", memail);
+	        user.put("mpasswd", encode_pass);
+	        MemberDTO userDTO = this.mdao.selectone_userck(user);
+	        
+	        if(userDTO != null) {
+	        	session.setAttribute("userDTO", userDTO);
+
+	        	m.addAttribute("msg", "로그인 되었습니다.");
+	        	m.addAttribute("url", "/index.do");
+	        }
+	        else {
+	        	m.addAttribute("msg", "이메일 또는 패스워드가 다릅니다. 정확하게 입력해 주세요.");
+	        	m.addAttribute("url", "/login.do");
+	        }
+		}
+		else if(code.equals("2")) {  //카카오 로그인 처리
+	        Map<String, String> user = new HashMap<>();
+	        user.put("code", "kakao");
+	        user.put("mid", kakao_id);
+	        user.put("mnicknm", kakao_nicknm);			
+			System.out.println(user);
+	        MemberDTO userDTO = this.mdao.selectone_userck(user);
+	        
+	        if(userDTO != null) {
+	        	session.setAttribute("userDTO", userDTO);
+
+	        	m.addAttribute("msg", "로그인 되었습니다.");
+	        	m.addAttribute("url", "/index.do");
+	        }
+	        else {
+	        	m.addAttribute("msg", "카카오 사용자로 로그인시 간편회원가입이 필요합니다.");
+	        	m.addAttribute("url", "/member_join.do?code=2");
+	        }	        
+		}
 		return "WEB-INF/realty/redirect";
 	}
 	

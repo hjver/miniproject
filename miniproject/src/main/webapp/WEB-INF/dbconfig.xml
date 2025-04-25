@@ -25,8 +25,8 @@
 <context:annotation-config/>
 
 <bean id="dbinfo" class="org.apache.commons.dbcp.BasicDataSource">
-<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-<property name="url" value="jdbc:mysql://localhost:3306/realty_mgmt"/>
+<property name="driverClassName" value="org.mariadb.jdbc.Driver"/>
+<property name="url" value="jdbc:mariadb://192.168.95.3:3306/realty_mgmt"/>
 <property name="username" value="nankim"/>
 <property name="password" value="a123456"/>
 </bean>

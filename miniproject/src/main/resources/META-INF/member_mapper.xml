@@ -11,14 +11,26 @@ select midx from member where memail=#{memail}
 
 <!-- 회원 가입 정보 DB 저장 -->
 <insert id="member_insert">
-insert into member (midx,memail,mpasswd,mname,mmobile,age_over14,terms_agree,privacy_agree,marketing_agree,join_date)
-values ('0',#{memail},#{mpasswd},#{mname},#{mmobile},#{age_over14},#{terms_agree},#{privacy_agree},<if test="marketing_agree != null">#{marketing_agree}</if>
+insert into member (midx,mcode,mid,memail,mpasswd,mname,mnicknm,mmobile,age_over14,terms_agree,privacy_agree,marketing_agree,join_date)
+values ('0',#{mcode},#{mid},#{memail},#{mpasswd},#{mname},#{mnicknm},#{mmobile},#{age_over14},#{terms_agree},#{privacy_agree},<if test="marketing_agree != null">#{marketing_agree}</if>
 <if test="marketing_agree == null">'N'</if>,now())
 </insert>
 
 <!-- 로그인을 위한 가입자 정보 select one -->
 <select id="selectone_userck" resultType="memberDTO" parameterType="Map">
-select midx,mname,memail,mmobile from member where memail=#{memail} and mpasswd=#{mpasswd}
+select midx,mname,memail,mmobile from member 
+<choose>
+	<when test="code == 'normal'">
+	<where>
+    memail=#{memail} and mpasswd=#{mpasswd}
+	</where>
+	</when>
+	<when test="code == 'kakao'">
+	<where>
+    mid=#{mid} and mnicknm=#{mnicknm}
+	</where>
+	</when>
+</choose>
 </select>
 
 <!-- 이메일 찾기를 위한 가입자 정보 select one -->
